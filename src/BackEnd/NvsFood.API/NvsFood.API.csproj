@@ -7,11 +7,19 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.5" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Controllers\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\NvsFood.Communications\NvsFood.Communications.csproj" />
+      <ProjectReference Include="..\..\Shared\NvsFood.Exceptions\NvsFood.Exceptions.csproj" />
+      <ProjectReference Include="..\NvsFood.Application\NvsFood.Application.csproj" />
+      <ProjectReference Include="..\NvsFood.Infrastructure\NvsFood.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

@@ -6,4 +6,15 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\..\Shared\NvsFood.Communications\NvsFood.Communications.csproj" />
+      <ProjectReference Include="..\..\Shared\NvsFood.Exceptions\NvsFood.Exceptions.csproj" />
+      <ProjectReference Include="..\NvsFood.Domain\NvsFood.Domain.csproj" />
+      <ProjectReference Include="..\NvsFood.Infrastructure\NvsFood.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="12.0.0" />
+    </ItemGroup>
+
 </Project>
