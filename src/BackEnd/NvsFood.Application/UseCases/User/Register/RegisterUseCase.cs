@@ -1,4 +1,5 @@
-﻿using NvsFood.Infrastructure.Requests;
+﻿using NvsFood.Exceptions.ExceptionBase;
+using NvsFood.Infrastructure.Requests;
 using NvsFood.Infrastructure.Responses;
 
 namespace NvsFood.Application.UseCases.User.Register;
@@ -23,8 +24,8 @@ public class RegisterUseCase
 
         if (result.IsValid == false)
         {
-            var errorMessages = result.Errors.Select(x => x.ErrorMessage);
-            throw new Exception();
+            var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
+            throw new ErrorOnValidationException(errorMessages);
         }
     }
     
