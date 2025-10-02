@@ -8,6 +8,10 @@ public class RegisterUseCase
 {
     public ResponseRegisterUserJson Execute(RequestRegisterUserJson request)
     {
+        // Validar - ok
+        // Mapear
+        // Salvar
+        // Retornar
         
         Validate(request);
         
