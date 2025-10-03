@@ -1,4 +1,4 @@
-﻿namespace NvsFood.Infrastructure.Responses;
+﻿namespace NvsFood.Communications.Responses;
 
 public class ResponseRegisterUserJson
 {
