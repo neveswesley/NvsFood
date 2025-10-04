@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NvsFood.Domain.Interfaces;
 using NvsFood.Domain.Repositories.User;
@@ -9,17 +10,17 @@ namespace NvsFood.Infrastructure;
 
 public static class DependenceInjectionExtension
 {
-    public static void AddInfrastructure(this IServiceCollection services)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         AddRepositories(services);
-        AddDbContext(services);
+        AddDbContext(services, configuration);
         AddUnitOfWork(services);
     }
 
-    private static void AddDbContext(IServiceCollection services)
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
 
-        var connectionString = "Server=WESLEY\\SQLEXPRESS;Database=NvsFoodDb;User ID=sa;Password=1q2w3e4r5t@#;TrustServerCertificate=True;";
+        var connectionString = configuration.GetConnectionString("Connection");
         
         services.AddDbContext<NvsFoodDbContext>(dbContextOptions =>
         {
