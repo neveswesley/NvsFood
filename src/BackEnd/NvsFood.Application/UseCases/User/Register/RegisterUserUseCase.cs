@@ -17,11 +17,13 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly PasswordEncripter _passwordEncripter;
     private readonly IUnitOfWork _unitOfWork;
 
+
     public RegisterUserUseCase(IUserReadOnlyRepository userReadOnlyRepository, 
         IUserWriteOnlyRepository userWriteOnlyRepository, 
         IMapper mapper, 
         PasswordEncripter passwordEncripter, 
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork
+       )
     {
         _userReadOnlyRepository = userReadOnlyRepository;
         _userWriteOnlyRepository = userWriteOnlyRepository;

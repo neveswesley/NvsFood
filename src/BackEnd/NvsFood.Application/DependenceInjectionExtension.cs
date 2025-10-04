@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using NvsFood.Application.Services.AutoMapper;
 using NvsFood.Application.Services.Criptography;
 using NvsFood.Application.UseCases.User.Register;
@@ -8,11 +9,13 @@ namespace NvsFood.Application;
 
 public static class DependenceInjectionExtension
 {
-    public static void AddApplication(this IServiceCollection services)
+    
+    
+    public static void AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
         AddUseCases(services);
         AddAutoMapper(services);
-        AddPasswordEncripter(services);
+        AddPasswordEncripter(services, configuration);
     }
 
     private static void AddUseCases(IServiceCollection services)
@@ -28,9 +31,10 @@ public static class DependenceInjectionExtension
         }, typeof(AutoMapping).Assembly);
     }
 
-    private static void AddPasswordEncripter(IServiceCollection services)
+    private static void AddPasswordEncripter(IServiceCollection services, IConfiguration configuration)
     {
-        services.AddScoped(options => new PasswordEncripter());
+        var additionalKey = configuration.GetValue<string>("Settings:Password:AdditionalKey");
+        services.AddScoped(options => new PasswordEncripter(additionalKey!));
     }
     
 }

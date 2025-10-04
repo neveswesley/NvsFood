@@ -1,15 +1,22 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace NvsFood.Application.Services.Criptography;
 
 public class PasswordEncripter
 {
+    private readonly string _additionalKey;
+
+    public PasswordEncripter(string additionalKey)
+    {
+        _additionalKey = additionalKey;
+    }
+
     public string Encrypt(string password)
     {
-        var addictionalKey = "ABC";
 
-        var newPassword = $"{addictionalKey}{password}";
+        var newPassword = $"{_additionalKey}{password}";
 
         var bytes = Encoding.UTF8.GetBytes(newPassword);
 

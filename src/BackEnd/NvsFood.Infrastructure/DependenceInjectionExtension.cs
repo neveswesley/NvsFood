@@ -19,7 +19,6 @@ public static class DependenceInjectionExtension
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-
         var connectionString = configuration.GetConnectionString("Connection");
         
         services.AddDbContext<NvsFoodDbContext>(dbContextOptions =>
