@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.Results;
 using NvsFood.Application.Services.Criptography;
 using NvsFood.Communications.Responses;
 using NvsFood.Domain.Interfaces;
@@ -35,7 +36,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     public async Task<ResponseRegisterUserJson> Execute(RequestRegisterUserJson request)
     {
         //Validar - ok
-        Validate(request);
+        await Validate(request);
 
         // Mapping - ok
         var user = _mapper.Map<Domain.Entities.User>(request);
@@ -56,11 +57,16 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         };
     }
 
-    private void Validate(RequestRegisterUserJson request)
+    private async Task Validate(RequestRegisterUserJson request)
     {
         var validator = new RegisterUserValidator();
         var result = validator.Validate(request);
 
+        var emailExists = await _userReadOnlyRepository.ExistActiveUserWithEmail(request.Email);
+        if (emailExists)
+            result.Errors.Add(new ValidationFailure(string.Empty, "Email is already registered."));
+            
+        
         if (result.IsValid == false)
         {
             var errorMessages = result.Errors.Select(x => x.ErrorMessage).ToList();
