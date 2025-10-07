@@ -5,6 +5,7 @@ using NvsFood.Domain.Interfaces;
 using NvsFood.Domain.Repositories.User;
 using NvsFood.Infrastructure.DataAccess;
 using NvsFood.Infrastructure.DataAccess.Repositories;
+using NvsFood.Infrastructure.Extensions;
 
 namespace NvsFood.Infrastructure;
 
@@ -19,7 +20,7 @@ public static class DependenceInjectionExtension
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("Connection");
+        var connectionString = configuration.ConnectionString();
         
         services.AddDbContext<NvsFoodDbContext>(dbContextOptions =>
         {

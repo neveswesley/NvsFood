@@ -1,6 +1,8 @@
 using NvsFood.API.Filters;
 using NvsFood.Application;
 using NvsFood.Infrastructure;
+using NvsFood.Infrastructure.Extensions;
+using NvsFood.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,4 +32,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+MigrateDatabase();
+
 app.Run();
+
+void MigrateDatabase()
+{
+    var connectionString = builder.Configuration.ConnectionString();
+    DatabaseMigration.Migrate(connectionString);
+}
