@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using FluentMigrator.Runner;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NvsFood.Domain.Interfaces;
@@ -16,6 +18,7 @@ public static class DependenceInjectionExtension
         AddRepositories(services);
         AddDbContext(services, configuration);
         AddUnitOfWork(services);
+        AddFluentMigrator(services, configuration);
     }
 
     private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
@@ -37,5 +40,16 @@ public static class DependenceInjectionExtension
     private static void AddUnitOfWork(IServiceCollection services)
     {
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+    }
+
+    private static void AddFluentMigrator(IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.ConnectionString();
+        services.AddFluentMigratorCore().ConfigureRunner(options =>
+        {
+            options.AddSqlServer()
+                .WithGlobalConnectionString(connectionString)
+                .ScanIn(Assembly.Load("NvsFood.Infrastructure")).For.All();
+        });
     }
 }
